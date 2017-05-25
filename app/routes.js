@@ -6,9 +6,9 @@ module.exports = function(app, passport) {
   });
 
   app.get('/profile', isLoggedIn, function(req, res) {
-    res.sendFile('shows.html', {
+    res.sendFile(path.resolve(__dirname, 'shows.html', {
       user: req.user
-    });
+    }));
   });
 
   app.get('/logout', function(req, res) {
