@@ -1,0 +1,86 @@
+*{
+	box-sizing: border-box;
+	text-decoration: none;
+	font-family: 'Roboto';
+}
+
+body{
+	margin-right: 0px;
+	background-color: #42f4d4;
+}
+
+#app-name {
+	float: left;
+	margin-top: 10px;
+	margin-left: 25px;
+	margin-bottom: 80px;
+}
+
+.nav-login {
+	display: inline-block;
+	float: right;
+}
+
+
+.sign-in {
+	height: 37px;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+.intro {
+	display: block;
+	clear: both;
+	margin-left: 25px;
+	text-align: center;
+}
+
+#intro-info {
+	margin-bottom: 10px;
+}
+
+.sign-up {
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#email {
+	height: 40px;
+	width: 320px;
+	padding-left: 10px;
+	margin: 15px 40px;
+}
+
+#password-label {
+	display: block;
+	font-size: 20px;
+	margin-left: 40px;
+}
+
+#password {
+	height: 40px;
+	width: 320px;
+	margin: 15px 40px;
+	padding-left: 10px;
+}
+
+#email-label {
+	font-size: 20px;
+	display: block;
+	margin-left: 40px;
+}
+
+.sign-up-header {
+	text-align: center;
+	font-size: 25px;
+}
+
+#sign-up-button {
+	display: block;
+	height: 40px;
+	width: 320px;
+	margin: 10px auto 10px auto;
+}

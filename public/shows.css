@@ -1,0 +1,109 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background-color: #42f4d4;
+}
+
+#app-name {
+	display: inline-block;
+	margin-left: 100px;
+	padding-left:30px;
+	font-size: 30px;
+	text-decoration: none;
+	font-family: 'Roboto';
+	color: black;
+}
+
+#logout{
+	float: right;
+	position: relative;
+	margin: 20px 20px;
+	height: 40px;
+	width: 100px;
+	border: 2px solid white;
+	border-radius: 2px;
+	background-color: white;
+	border: 2px solid white;
+}
+
+.add-header {
+	font-size: 30px;
+}
+
+.add-show {
+	text-align: center;
+}
+
+.add-show-button {
+	height: 40px;
+	width: 100px;
+	border: 1px solid white;
+	border-radius: 2px;
+	background-color: white;
+}
+
+.show-title{
+	font-size: 30px;
+	font-family: 'Roboto';
+}
+
+.return-date, .schedule {
+	font-size: 20px;
+	font-family: 'Roboto';
+}
+
+#show-title, #show-date, #schedule-day, #schedule-time{
+	display: block;
+	height: 40px;
+	width: 320px;
+	font-size: 15px;
+	margin: 0 auto 8px auto;
+}
+
+#name-label, #return-label, #schedule-label, #time-label {
+	margin-left: 23px;
+}
+
+.show-form {
+	width: 400px;
+	height: 300px;
+	font-family: 'Roboto';
+	margin: 10px auto 20px auto;
+}
+
+.show-form-label {
+	border: 2px solid white;
+	border-radius: 5px;
+}
+
+#submit-show {
+	height: 40px;
+	width: 320px;
+	margin-left: 23px;
+}
+
+#legend-title {
+	text-align: center;
+}
+
+.show-item {
+	display: inline-block;
+	padding-left: 15px;
+	padding-right: 5px;
+	margin-top: 30px;
+	margin-left: 50px;
+	background-color: white;
+	width: 350px;
+	height: 200px;
+	border: 2px solid white;
+	border-radius: 5px;
+}
+
+
+.fa {
+	float: right;
+	padding: 5px;
+}
