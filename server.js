@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const showRouter = require('./app/showRoutes');
+const {showRoutes} = require('./app/showRoutes');
 
 const {User} = require('./app/models/user');
 const {Show} = require('./app/models/show');
@@ -23,7 +23,7 @@ app.use('*', function(req, res) {
 });
 
 app.use('/user', router);
-//app.use('/shows', showRouter);
+app.use('/shows', showRoutes);
 
 
 let server;
