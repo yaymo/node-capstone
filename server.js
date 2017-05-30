@@ -22,7 +22,7 @@ app.use('*', function(req, res) {
   return res.status(404).json({message: 'Not Found'});
 });
 
-app.use('/user', router);
+app.use('/users/', router);
 app.use('/shows', showRoutes);
 
 
