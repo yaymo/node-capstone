@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: CSPO+y+1berSdzNIyc1NkYSiQKhn/fVuaMwOIuzHstXBgAjCwfbMgyPNjlezIoS6mZoUdT1KHDXLNctLiKKfQF/HkUZH6/MbymK1LFb6rhwMRCWegRVGEix969rOyFxSQG29mL7FgjaC94YUJGvIb7w82tpk4z5MtG95CFmkBSVsprRuh8gAAG7RzTrMUajPANU96dgM7n1a4UyonRvQYV7oa/i4hYDjKC1EQxloDW2yPcngILQVqu1+rExHpyqKadSU6ADUd93N+6e5xGELpfjm6D6YKc7R76/7m577sU7qCXLSUzZQAwqhlxszNfxgu+wtjpZQTSlzAzeyKIWMG3NWZN8YbBAWSk8rsSptdsS2ErG8Z4UmjgrL8SwgFT9dDS0uvOCODStwt/ApFZU49wOATV/YWy8PGgQJITsBip0dg2SoXsJD2akJ7X8M0P4nDnyNuJdXRsk25w70dcF5gkoXteWFn00lAawdbwTiLG/69IEc8Fd6nV3C2wYuOTyv+p9CMIF/RXx12ZWItNWoXB4CEVXtkfWpncQv9Sec2TrPQ78WtkEWeEnqTIHn65EANsNpHhQsw8oCo/QdGhps++/geyFy3jOmd4UYGmVKR8nlY3uMznvQmuSzl9gK/Ben4icH1GzL/rI3VTR4SKcp1X6g06rxwTxnALlCyoCGPSc=
+  app: fierce-gorge-11159
+  on:
+    repo: yaymo/node-capstone
