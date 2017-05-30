@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs');
+
+mongoose.Promise = global.Promise;
 
 var userSchema = mongoose.Schema({
   username: {
@@ -10,15 +12,30 @@ var userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  firstName: {type: String},
+  lastName: {type: String}
 });
 
-userSchema.methods.generateHash = function(password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-};
+userSchema.methods.apiRepr = function() {
+  return {
+    userSchema: this.username,
+    firstName: this.firstname,
+    lastName: this.lastName
+  };
+}
 
-userSchema.methods.validPassword = function(password) {
-  return bcrypt.compareSync(password, this.local.password);
-};
+userSchema.methods.validatePassword = function(password) {
+  return bcrypt.compare(password, this.password).then(isValid => isValid);
+}
 
-module.exports = mongoose.model('User', userSchema);
+
+
+userSchema.methods.hashPassword = function(password) {
+  return bcrypt.hash(password, 10).then(hash => hash);
+}
+
+const User = mongoose.model('User', userSchema);
+
+
+module.exports = {User};

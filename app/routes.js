@@ -1,31 +1,121 @@
-const path = require('path');
+const {BasicStrategy} = require('passport-http');
+const passport = require('passport');
 
-module.exports = function(app, passport) {
-  app.get('/', function(req, res) {
-    res.sendFile(path.resolve(__dirname, 'static'));
-  });
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 
-  app.get('/profile', isLoggedIn, function(req, res) {
-    res.sendFile(path.resolve(__dirname, 'shows.html', {
-      user: req.user
-    }));
-  });
+const express = require('express');
+const router = express.Router();
+const {User} = require('./models/user');
 
-  app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-  });
+router.use(jsonParser);
 
-  app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/profile',
-    failureRedirect: '/',
-    failureFlash: true
-  }));
-};
+router.post('/', (req, res) => {
+  if (!req.body) {
+    return res.status(400).json({message: 'No request body'});
+  }
 
-function isLoggedIn(req, res, next) {
-  if(req.isAuthenticated())
-    return next();
+  if (!('username' in req.body)) {
+    return res.status(422).json({message: 'Missing field: username'});
+  }
 
-  res.redirect('/');  
-}
+  let {username, password, firstName, lastName} = req.body;
+
+  if (typeof username !== 'string') {
+    return res.status(422).json({message: 'Incorrect field type: username'});
+  }
+
+  username = username.trim();
+
+  if (username === '') {
+    return res.status(422).json({message: 'Incorrect field length: username'});
+  }
+
+  if (!(password)) {
+    return res.status(422).json({message: 'Missing field: password'});
+  }
+
+  if (typeof password !== 'string') {
+    return res.status(422).json({message: 'Incorrect field type: password'});
+  }
+
+  password = password.trim();
+
+  if (password === '') {
+    return res.status(422).json({message: 'Incorrect field length: password'});
+  }
+
+  return User
+    .find({username})
+    .count()
+    .exec()
+    .then(count => {
+      console.log("anything")
+      if (count > 0) {
+        return res.status(422).json({message: 'username already taken'});
+      }
+      return User.hashPassword(password)
+    })
+    .then(hash => {
+      console.log("test")
+      return User
+        .create({
+          username: username,
+          password: hash,
+          firstName: firstName,
+          lastName: lastName
+        })
+    })
+    .then(user => {
+      console.log("testing")
+      return res.status(201).json(user.apiRepr());
+    })
+    .catch(err => {
+      res.status(500).json({message: 'Internal server error'})
+      console.log(err);
+    });
+});
+
+router.get('/', (req, res) => {
+  return User
+    .find()
+    .exec()
+    .then(users => res.json(users.map(user => user.apiRepr())))
+    .catch(err => console.log(err) && res.status(500).json({message: 'Internal server error'}));
+});
+
+
+const basicStrategy = new BasicStrategy(function(username, password, callback) {
+  let user;
+  User
+    .findOne({username: username})
+    .exec()
+    .then(_user => {
+      user = _user;
+      if (!user) {
+        return callback(null, false, {message: 'Incorrect username'});
+      }
+      return user.validatePassword(password);
+    })
+    .then(isValid => {
+      if (!isValid) {
+        return callback(null, false, {message: 'Incorrect password'});
+      }
+      else {
+        return callback(null, user)
+      }
+    });
+});
+
+
+passport.use(basicStrategy);
+router.use(passport.initialize());
+
+
+router.get('/me',
+  passport.authenticate('basic', {session: false}),
+  (req, res) => res.json({user: req.user.apiRepr()})
+);
+
+
+module.exports = {router};
