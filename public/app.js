@@ -1,25 +1,22 @@
-function createAccount() {
+
+
+$(function() {
   $('#sign-up-button').submit(function(e) {
+    console.log('test');
     e.preventDefault();
-    let username = $(this).find('#username').val();
-    let password = $(this).find('#id').val();
-
-    $.ajax({
-      url:'/signup',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        username: username,
-        password: password
-      }),
-      success: function(data) {
-        state.user = {
-          id: data.id,
-          username: data.username
-        }
-
-        //redirect???
-      }
-    })
+    createAccount($('#username').val(), $('#password').val());
   })
+})
+
+function createAccount(username, password) {
+  $.ajax({
+    url: '/user/signup',
+    type: 'POST',
+    data: JSON.stringify({username, password}),
+    contentType: 'application/json',
+    success: function() {
+      localStorage.headers = "Basic" + btoa(username+ ":" + password)
+      window.location.replace = 'shows.html';
+    }
+  });
 }

@@ -10,7 +10,27 @@ const {User} = require('./models/user');
 
 router.use(jsonParser);
 
-router.post('/', (req, res) => {
+const strategy = new BasicStrategy(
+  (username, password, cb) => {
+    User
+      .findOne({username})
+      .exec()
+      .then(user => {
+        if(!user) {
+          return cb(null, false, {
+            message: 'incorrect username'
+          });
+        }
+        if(user.password !== password) {
+          return cb(null, false, 'Incorrect password');
+        }
+        return cb(null, user);
+      })
+      .catch(err => cb(err))
+  });
+
+
+router.post('/signup', (req, res) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
@@ -44,20 +64,21 @@ router.post('/', (req, res) => {
   if (password === '') {
     return res.status(422).json({message: 'Incorrect field length: password'});
   }
-
+  console.log('test');
   return User
     .find({username})
     .count()
     .exec()
     .then(count => {
-      console.log("anything")
       if (count > 0) {
-        return res.status(422).json({message: 'username already taken'});
+        return Promise.reject({
+          name: 'authenticationerror',
+          message: 'username already taken'
+        });
       }
       return User.hashPassword(password)
     })
     .then(hash => {
-      console.log("test")
       return User
         .create({
           username: username,
@@ -67,12 +88,13 @@ router.post('/', (req, res) => {
         })
     })
     .then(user => {
-      console.log("testing")
       return res.status(201).json(user.apiRepr());
     })
     .catch(err => {
+      if(err.name === 'authenticationerror'){
+        return res.status(422).json({message: err.message});
+      }
       res.status(500).json({message: 'Internal server error'})
-      console.log(err);
     });
 });
 
@@ -83,7 +105,6 @@ router.get('/', (req, res) => {
     .then(users => res.json(users.map(user => user.apiRepr())))
     .catch(err => console.log(err) && res.status(500).json({message: 'Internal server error'}));
 });
-
 
 const basicStrategy = new BasicStrategy(function(username, password, callback) {
   let user;

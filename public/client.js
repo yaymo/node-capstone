@@ -49,17 +49,29 @@ var showAddFormTemplate =
 	<div>`
 
 $('.add-show').click(function(e) {
-	e.stopPropagation();
+	e.preventDefault();
 	var itemForm = $(showAddFormTemplate);
+	itemForm.on('submit', function(e) {
+		e.preventDefault();
+		let show = {
+			title: $('#show-title').val(),
+			returnDate: $('#show-date').val(),
+			schedule: {
+				day: $('#schedule-day').val(),
+				time: $('#schedule-time').val()
+			}
+		}
+		addShow(show);
+	})
 	$('.add-form').append(itemForm);
-});
+})
 
 function getRecentShowUpdates(callbackFn) {
 	setTimeout(function() { callbackFn(MOCK_UPDATES)}, 1)
 }
 
 var state = {
-	items: []
+	shows: []
 };
 
 var showTemplate = (
@@ -69,14 +81,13 @@ var showTemplate = (
 			<i class="fa fa-pencil" aria-hidden="true"></i>
 			<i class="fa fa-trash-o" aria-hidden="true"></i>
 			</h3>
-			<p class="js-return-date"> Return Date: </p>
+			<p class="js-return-date"> Return date: </p>
 			<p class="js-schedule-day"> Schedule: <span class="js-schedule-time"> </span></p>
 		</div>
 	</div>`
 );
 
-var serverBase = '//localhost:8080/';
-var SHOW_URL = serverBase + '/profile';
+var SHOW_URL =  '/shows';
 
 function addShow(show) {
 	$.ajax({
@@ -85,6 +96,9 @@ function addShow(show) {
 		data: JSON.stringify(show),
 		success: function(data) {
 			getAndDisplayShowUpdates();
+		},
+		headers: {
+			Authorization: localStorage.headers
 		},
 		dataType: 'json',
 		contentType: 'application/json'
@@ -112,13 +126,13 @@ function updateShow(show) {
 
 function handleShowAdd() {
 	$('#submit-show').submit(function(e) {
-		e.preventDefault();
+		console.log('test');
 		addShow({
 			title: $(e.currentTarget).find('#show-title').val(),
 			returnDate: $(e.currentTarget).find('#show-date').val(),
 			schedule: {
 				day: $(e.currentTarget).find('#schedule-day').val(),
-				time: $(e.currentTarget).find('#schedule-time').val()
+			time: $(e.currentTarget).find('#schedule-time').val()
 			}
 		});
 	});
@@ -135,41 +149,57 @@ function handleShowDelete() {
 
 
 
-function displayShowUpdates(data) {
-	for(index in data.showsList) {
-		$('.show-list').append(
-			'<div class="col-6">' +
-				'<div class="show-item">' +
-					'<h3 class="show-title">' + data.showsList[index].title +
-					'<i class="fa fa-pencil aria-hidden="true"></i>' +
-					'<i class="fa fa-trash-o" aria-hidden="true"></i>' +
-					 '</h3>' +
-					'<p class="return-date"> Return Date: ' + data.showsList[index].returnDate + '</p>' +
-					'<p class="schedule"> Schedule: ' + data.showsList[index].schedule.day + ' <span> at</span>' + ' ' +
-					data.showsList[index].schedule.time + '</p>' +
-				'</div>' +
-			'</div>')
-	}
-}
+// function displayShowUpdates(data) {
+// 	for(index in data.showsList) {
+// 		$('.show-list').append(
+// 			'<div class="col-6">' +
+// 				'<div class="show-item">' +
+// 					'<h3 class="show-title">' + data.showsList[index].title +
+// 					'<i class="fa fa-pencil aria-hidden="true"></i>' +
+// 					'<i class="fa fa-trash-o" aria-hidden="true"></i>' +
+// 					 '</h3>' +
+// 					'<p class="return-date"> Return Date: ' + data.showsList[index].returnDate + '</p>' +
+// 					'<p class="schedule"> Schedule: ' + data.showsList[index].schedule.day + ' <span> at</span>' + ' ' +
+// 					data.showsList[index].schedule.time + '</p>' +
+// 				'</div>' +
+// 			'</div>')
+// 	}
+// }
+
+
 
 function getAndDisplayShowUpdates() {
-	$.getJSON(SHOW_URL, function(shows) {
-		var showElem = shows.map(function(show) {
-			var elem = $(showTemplate);
-			elem.attr('id', show.id);
-			elem.find('.js-show-title').text(show.title);
-			elem.find('.js-return-date').text(show.returnDate);
-			elem.find('.js-schedule-day').text(show.schedule.day);
-			elem.find('.js-schedule-time').text(show.schedule.time);
+	$.ajax({
+		method: 'GET',
+		url: SHOW_URL,
+		success: function(data) {
+			var showItem = data.map(function(show) {
+				var element = $(showTemplate);
+				element.attr('id', show._id);
+				console.log('test');
+				element.find('.js-show-title').text(show.title);
+				element.find('.js-return-date').text(show.returnDate);
+				element.find('.js-schedule-day').text(show.schedule.day);
+				element.find('.js-schedule-time').text(show.schedule.time);
 
-			return elem;
-		});
-		$('.js-show-item').html(showElem);
+				return element;
+			});
+
+			$('.show-list').html(showItem);
+
+		},
+		headers: {
+			Authorization: localStorage.headers
+		}
 	});
 }
+
+// function getAndDisplayShowUpdates() {
+// 	getRecentShowUpdates(displayShowUpdates);
+// }
 
 $(function() {
 	getAndDisplayShowUpdates();
 	handleShowAdd();
 	handleShowDelete();
-})
+});

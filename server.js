@@ -2,27 +2,27 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+const path = require('path');
+const passport = require('passport');
 
 const {showRoutes} = require('./app/showRoutes');
+const {router} = require('./app/routes');
+
 
 const {User} = require('./app/models/user');
 const {Show} = require('./app/models/show');
 const {DATABASE_URL, PORT} = require('./config/database');
 
-const {router} = require('./app/routes');
-
 app.use(morgan('common'));
-app.use(cookieParser());
-app.use(bodyParser());
+app.use(jsonParser);
 app.use(express.static('public'));
 app.use('*', function(req, res) {
   return res.status(404).json({message: 'Not Found'});
 });
 
-app.use('/users/', router);
+app.use('/user', router);
 app.use('/shows', showRoutes);
 
 
