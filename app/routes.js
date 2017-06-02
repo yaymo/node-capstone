@@ -30,11 +30,10 @@ const strategy = new BasicStrategy(
   });
 
 
-router.post('/signup', (req, res) => {
+router.post('/', (req, res) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
-
   if (!('username' in req.body)) {
     return res.status(422).json({message: 'Missing field: username'});
   }
@@ -94,7 +93,7 @@ router.post('/signup', (req, res) => {
       if(err.name === 'authenticationerror'){
         return res.status(422).json({message: err.message});
       }
-      res.status(500).json({message: 'Internal server error'})
+      res.status(500).json({message: err.message})
     });
 });
 
@@ -139,4 +138,4 @@ router.get('/me',
 );
 
 
-module.exports = {router};
+module.exports = router;
