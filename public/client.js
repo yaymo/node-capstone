@@ -1,3 +1,7 @@
+$('#logout').on('click', function() {
+	window.location = 'index.html';
+});
+
 var MOCK_UPDATES = {
 	"showsList": [
 		{
@@ -43,7 +47,7 @@ var showAddFormTemplate =
 					<input type="text" name="schedule-day" id="schedule-day" placeholder="Ex: Sunday's"</input>
 					<label for="schedule-time" id="time-label">Time:</label>
 					<input type="text" name="schedule-time" id="schedule-time" placeholder="Ex: 9 pm"></input>
-					<button type="submit" id="submit-show">Submit</button>
+					<button type="submit" id="submit-show">Add</button>
 			</fieldset>
 		</form>
 	<div>`
@@ -51,7 +55,7 @@ var showAddFormTemplate =
 $('.add-show').click(function(e) {
 	e.preventDefault();
 	var itemForm = $(showAddFormTemplate);
-	itemForm.on('submit', function(e) {
+	itemForm.submit(function(e) {
 		e.preventDefault();
 		let show = {
 			title: $('#show-title').val(),
@@ -71,8 +75,9 @@ function getRecentShowUpdates(callbackFn) {
 }
 
 var state = {
-	shows: []
-};
+	id: null,
+	show: null
+}
 
 var showTemplate = (
 	`<div class="col-6">
