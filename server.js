@@ -21,9 +21,9 @@ app.use(express.static('public'));
 
 app.use('/users', router);
 app.use('/shows', showRoutes);
-app.get('/', function(req, res) {
-  res.sendFile('./public/show.html');
-});
+// app.get('/', function(req, res) {
+//   res.sendFile('./public/show.html');
+// });
 
 app.use('*', function(req, res) {
   return res.status(404).json({message: 'Not Found'});
