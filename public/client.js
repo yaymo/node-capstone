@@ -29,12 +29,12 @@ var showAddFormTemplate =
 var showTemplate =
 	`<div class="col-6">
 		<div class="js-show-item">
-			<h3 class="js-show-title">
+			<h3 class="js-show-title"></h3>
 			<i class="fa fa-pencil" aria-hidden="true"></i>
 			<i class="fa fa-trash-o" aria-hidden="true"></i>
-			</h3>
-			<p class="js-return-date"> Return date: </p>
-			<p class="js-schedule-day"> Schedule: <span class="js-schedule-time"> </span></p>
+			<p>Return date: <span class="js-return-date"></span></p>
+			<p>Schedule: <span class="js-schedule-day"></span> at <span class="js-schedule-time">
+			</span></p>
 		</div>
 	</div>`
 
