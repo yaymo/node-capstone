@@ -10,35 +10,39 @@ const showRoutes = express.Router();
 showRoutes.use(jsonParser);
 
 showRoutes.get('/', passport.authenticate('basic', {session: false}), (req, res) => {
-  Show.find({
-    user: req.user._id
-  }).then(shows => {
+  Show.find({ user: req.user._id})
+    .then(shows => {
     res.json(shows);
   });
 });
 
 showRoutes.get('/:id', (req, res) => {
-  Show.findById(req.params.id).then(shows => {
+  Show.findById(req.params.id)
+    .then(shows => {
     res.json(shows)
   });
 });
 
+
 showRoutes.post('/', passport.authenticate('basic', {session: false}), jsonParser, (req, res) => {
+  //console.log(req);
+
   const reqFields = ['title'];
   for(let i=0; i<reqFields.length; i++) {
     const field = reqFields[i];
-    if(!(field in reqFields)) {
+    if(!(field in req.body)) {
       const message = `Missing \`${field}\` in req body`
       console.error(message);
       return res.status(400).send(message);
     }
   }
+  req.body.user = req.user._id
+  console.log(req.body);
 
-  req.body.user = res.user._id
 
   const item = Show.create(req.body);
   res.status(201).json(item);
-});
+})
 
 showRoutes.put('/:id', (req, res) => {
   const reqFields = ['name', '_id'];
@@ -56,8 +60,7 @@ showRoutes.put('/:id', (req, res) => {
     return res.status(400).send(message);
   }
 
-  Show.update({
-    _id: req.params.id }, { $set: req.body}, function(data) {
+  Show.update({ _id: req.params.id }, { $set: req.body}, function(data) {
       console.log(data);
       res.sendStatus(204);
   });

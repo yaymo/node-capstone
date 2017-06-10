@@ -2,6 +2,12 @@ $('#logout').on('click', function() {
 	window.location = 'index.html';
 });
 
+var state = {
+	id: null,
+	show: null
+}
+var SHOW_URL =  '/shows';
+
 var showAddFormTemplate =
 	`<div class="row">
 		<form class="show-form" action="">
@@ -33,22 +39,15 @@ var showTemplate =
 	</div>`
 
 
-var state = {
-	id: null,
-	show: null
-}
-var SHOW_URL =  '/shows';
-
-$('.add-show-button').click(function(e) {
-	e.preventDefault();
+$('.add-show-button').click(function() {
 	var itemForm = $(showAddFormTemplate);
 	itemForm.submit(function(e) {
 		let show = {
-			title: $(e.currentTarget).find('#show-title').val(),
-			returnDate: $(e.currentTarget).find('#show-date').val(),
+			title: $('#show-title').val(),
+			returnDate: $('#show-date').val(),
 			schedule: {
-				day: $(e.currentTarget).find('#schedule-day').val(),
-				time: $(e.currentTarget).find('#schedule-time').val()
+				day: $('#schedule-day').val(),
+				time: $('#schedule-time').val()
 			}
 		}
 		addShow(show);
@@ -61,11 +60,11 @@ function addShow(show) {
 		method: 'POST',
 		url: SHOW_URL,
 		data: JSON.stringify(show),
-		success: function(data) {
+		success: function() {
 			getAndDisplayShowUpdates();
 		},
 		headers: {
-			Authorization: localStorage.headers
+			user: JSON.parse(localStorage.headers)
 		},
 		dataType: 'json',
 		contentType: 'application/json'
@@ -76,31 +75,31 @@ function deleteShow(showId) {
 	$.ajax({
 		method: 'DELETE',
 		url: SHOW_URL + '/' + showId,
-		success: getAndDisplayShowUpdates()
+		success: getAndDisplayShowUpdates(),
+		contentType: 'application/json'
 	});
 }
 
 function updateShow(show) {
 	$.ajax({
 		method: 'PUT',
-		url: SHOW_URL + show.id,
+		url: SHOW_URL + '/' + show.id,
 		data: show,
-		success: function(data) {
+		success: function() {
 			getAndDisplayShowUpdates();
 		}
 	});
 }
 
 function handleShowAdd() {
-	$('#submit-show').submit(function(e) {
+	$('#show-form').submit(function(e) {
 		console.log('test');
 		addShow({
 			title: $(e.currentTarget).find('#show-title').val(),
 			returnDate: $(e.currentTarget).find('#show-date').val(),
-			schedule: {
-				day: $(e.currentTarget).find('#schedule-day').val(),
-			time: $(e.currentTarget).find('#schedule-time').val()
-			}
+			scheduleDay: $(e.currentTarget).find('#schedule-day').val(),
+			scheduleTime: $(e.currentTarget).find('#schedule-time').val()
+
 		});
 	});
 }
@@ -115,31 +114,47 @@ function handleShowDelete() {
 }
 
 
-
 function getAndDisplayShowUpdates() {
-	$.ajax({
-		method: 'GET',
-		url: SHOW_URL,
-		success: function(data) {
-			var showItem = data.map(function(show) {
-				var elem = $(showTemplate);
-				elem.attr('id', show._id);
-				elem.find('.js-show-title').text(show.title);
-				elem.find('.js-return-date').text(show.returnDate);
-				elem.find('.js-schedule-day').text(show.schedule.day);
-				elem.find('.js-schedule-time').text(show.schedule.time);
+	$.getJSON('/shows', function(data) {
+		var showItems = data.map(function(show) {
+			var elem = $(showTemplate);
+			elem.attr('id', show._id);
+			elem.find('.js-show-title').text(show.title);
+			elem.find('.js-return-date').text(show.returnDate);
+			elem.find('.js-schedule-day').text(show.scheduleDay);
+			elem.find('.js-schedule-time').text(show.scheduleTime);
 
-				return element;
-			});
+			return elem;
+		});
 
-			$('.show-list').html(showItem);
-
-		},
-		headers: {
-			Authorization: localStorage.headers
-		}
+		$('.show-list').html(showItems);
 	});
 }
+
+// function getAndDisplayShowUpdates() {
+// 	$.ajax({
+// 		method: 'GET',
+// 		url: SHOW_URL,
+// 		success: function(data) {
+// 			var showItem = data.map(function(show) {
+// 				var elem = $(showTemplate);
+// 				elem.attr('id', show._id);
+// 				elem.find('.js-show-title').text(show.title);
+// 				elem.find('.js-return-date').text(show.returnDate);
+// 				elem.find('.js-schedule-day').text(show.schedule.day);
+// 				elem.find('.js-schedule-time').text(show.schedule.time);
+
+// 				return elem;
+// 			});
+
+// 			$('.show-list').html(showItem);
+
+// 		},
+// 		headers: {
+// 			Authorization: localStorage.headers
+// 		}
+// 	});
+// }
 
 $(function() {
 	getAndDisplayShowUpdates();

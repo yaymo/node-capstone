@@ -9,6 +9,8 @@ const router = express.Router();
 const {User} = require('./models/user');
 
 router.use(jsonParser);
+router.use(passport.initialize());
+
 
 const strategy = new BasicStrategy(
   (username, password, cb) => {
@@ -28,6 +30,7 @@ const strategy = new BasicStrategy(
       })
       .catch(err => cb(err))
   });
+passport.use(strategy);
 
 
 router.post('/', (req, res) => {
@@ -63,7 +66,6 @@ router.post('/', (req, res) => {
   if (password === '') {
     return res.status(422).json({message: 'Incorrect field length: password'});
   }
-  console.log('test');
   return User
     .find({username})
     .count()
@@ -93,7 +95,7 @@ router.post('/', (req, res) => {
       if(err.name === 'authenticationerror'){
         return res.status(422).json({message: err.message});
       }
-      res.status(500).json({message: err.message})
+      res.status(500).json({message:'Internal Server Error'})
     });
 });
 
@@ -138,4 +140,4 @@ router.get('/me',
 );
 
 
-module.exports = router;
+module.exports = {router};

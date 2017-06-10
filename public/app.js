@@ -32,8 +32,8 @@ function logIn(username, password) {
     url:'/users',
     type: 'GET',
     data: JSON.stringify({username: username, password: password}),
-    success: function() {
-      localStorage.headers = 'Basic' + btoa(username + ':' + password)
+    success: function(user) {
+      localStorage.headers = JSON.stringify(user[0])
       window.location = 'shows.html';
     }
   });
