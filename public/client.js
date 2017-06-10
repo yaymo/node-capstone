@@ -16,7 +16,7 @@ var showAddFormTemplate =
 					<label for="show-name" id="name-label">Title:</label>
 					<input type="text" id="show-title" name="show-name" placeholder="Ex: Family Feud" required></input>
 					<label for="show-return" id="return-label">Return Date:</label>
-					<input type="date" id="show-date" name="show-return"></input>
+					<input type="text" id="show-date" name="show-return"placeholder="Ex: June 15th"></input>
 					<label for="schedule-day" id="schedule-label">Schedule:</label>
 					<input type="text" name="schedule-day" id="schedule-day" placeholder="Ex: Sunday's"</input>
 					<label for="schedule-time" id="time-label">Time:</label>
@@ -41,18 +41,18 @@ var showTemplate =
 
 $('.add-show-button').click(function() {
 	var itemForm = $(showAddFormTemplate);
+	$('.add-form').append(itemForm);
 	itemForm.submit(function(e) {
 		let show = {
 			title: $('#show-title').val(),
 			returnDate: $('#show-date').val(),
-			schedule: {
-				day: $('#schedule-day').val(),
-				time: $('#schedule-time').val()
-			}
+			scheduleDay: $('#schedule-day').val(),
+			scheduleTime: $('#schedule-time').val()
+
 		}
 		addShow(show);
 	})
-	$('.add-form').append(itemForm);
+	// //$('.add-form').append(itemForm);
 })
 
 function addShow(show) {
@@ -131,30 +131,6 @@ function getAndDisplayShowUpdates() {
 	});
 }
 
-// function getAndDisplayShowUpdates() {
-// 	$.ajax({
-// 		method: 'GET',
-// 		url: SHOW_URL,
-// 		success: function(data) {
-// 			var showItem = data.map(function(show) {
-// 				var elem = $(showTemplate);
-// 				elem.attr('id', show._id);
-// 				elem.find('.js-show-title').text(show.title);
-// 				elem.find('.js-return-date').text(show.returnDate);
-// 				elem.find('.js-schedule-day').text(show.schedule.day);
-// 				elem.find('.js-schedule-time').text(show.schedule.time);
-
-// 				return elem;
-// 			});
-
-// 			$('.show-list').html(showItem);
-
-// 		},
-// 		headers: {
-// 			Authorization: localStorage.headers
-// 		}
-// 	});
-// }
 
 $(function() {
 	getAndDisplayShowUpdates();

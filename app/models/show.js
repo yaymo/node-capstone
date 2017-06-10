@@ -9,16 +9,25 @@ const showSchema = mongoose.Schema({
     required: true
   },
   returnDate: {
-    type: Date
+    type: String
   },
-  schedule: {
-    day: { type: String },
-    time: {type: String }
+  scheduleDay: {
+    type: String
+  },
+  scheduleTime: {
+    type: String
   },
   id: {
     type: String
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'no id found']
   }
 });
+
+
 
 const Show = mongoose.model('Show', showSchema);
 
