@@ -45,7 +45,7 @@ showRoutes.post('/', passport.authenticate('basic', {session: false}), jsonParse
 })
 
 showRoutes.put('/:id', (req, res) => {
-  const reqFields = ['name', '_id'];
+  const reqFields = ['completed', '_id'];
   for(let i=0; i<reqFields.length; i++) {
     const field = reqFields[i];
     if(!(field in req.body)) {

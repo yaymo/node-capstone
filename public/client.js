@@ -2,10 +2,6 @@ $('#logout').on('click', function() {
 	window.location = 'index.html';
 });
 
-var state = {
-	id: null,
-	show: null
-}
 var SHOW_URL =  '/shows';
 
 var showAddFormTemplate =
@@ -27,15 +23,14 @@ var showAddFormTemplate =
 	<div>`
 
 var showTemplate =
-	`<div class="col-6">
-		<div class="js-show-item">
+	`<div class="col-6 js-show-item">
 			<h3 class="js-show-title"></h3>
-			<i class="fa fa-pencil" aria-hidden="true"></i>
 			<i class="fa fa-trash-o" aria-hidden="true"></i>
-			<p>Return date: <span class="js-return-date"></span></p>
+			<p>Return Date: <span class="js-return-date"></span></p>
 			<p>Schedule: <span class="js-schedule-day"></span> at <span class="js-schedule-time">
 			</span></p>
-		</div>
+			<p id="checkbox-container">Mark as Watched: </p>
+			<input type="checkbox" name="completed" class="js-completed" value="">
 	</div>`
 
 
@@ -47,13 +42,14 @@ $('.add-show-button').click(function() {
 			title: $('#show-title').val(),
 			returnDate: $('#show-date').val(),
 			scheduleDay: $('#schedule-day').val(),
-			scheduleTime: $('#schedule-time').val()
-
+			scheduleTime: $('#schedule-time').val(),
+			completed: false
 		}
 		addShow(show);
 	})
-	// //$('.add-form').append(itemForm);
 })
+
+
 
 function addShow(show) {
 	$.ajax({
@@ -75,25 +71,31 @@ function deleteShow(showId) {
 	$.ajax({
 		method: 'DELETE',
 		url: SHOW_URL + '/' + showId,
-		success: getAndDisplayShowUpdates(),
+		success: function() {
+			getAndDisplayShowUpdates();
+		},
 		contentType: 'application/json'
 	});
 }
 
-function updateShow(show) {
+function updateShow(showUpdate) {
 	$.ajax({
 		method: 'PUT',
-		url: SHOW_URL + '/' + show.id,
-		data: show,
+		url: SHOW_URL + '/' + showUpdate._id,
+		data: JSON.stringify(showUpdate),
 		success: function() {
 			getAndDisplayShowUpdates();
-		}
+		},
+		headers: {
+			user: JSON.parse(localStorage.headers)
+		},
+		dataType: 'json',
+		contentType: 'application/json'
 	});
 }
 
 function handleShowAdd() {
 	$('#show-form').submit(function(e) {
-		console.log('test');
 		addShow({
 			title: $(e.currentTarget).find('#show-title').val(),
 			returnDate: $(e.currentTarget).find('#show-date').val(),
@@ -105,13 +107,27 @@ function handleShowAdd() {
 }
 
 function handleShowDelete() {
-	$('.js-show-item').on('click', '.fa-trash-o', function(e) {
+	$('.show-list').on('click', '.fa-trash-o', function(e) {
 		e.preventDefault();
 		deleteShow(
 			$(e.currentTarget).closest('.js-show-item').attr('id')
 		);
 	});
 }
+
+function handleShowUpdate() {
+	console.log('test');
+	$('.js-completed:checkbox').change(function(e) {
+		console.log('test');
+		e.preventDefault();
+		let showUpdate = {
+			completed: $('.js-completed').prop('checked'),
+			_id: $(e.currentTarget).closest('.js-show-item').attr('id')
+		}
+		updateShow(showUpdate);
+	});
+}
+
 
 
 function getAndDisplayShowUpdates() {
@@ -123,17 +139,19 @@ function getAndDisplayShowUpdates() {
 			elem.find('.js-return-date').text(show.returnDate);
 			elem.find('.js-schedule-day').text(show.scheduleDay);
 			elem.find('.js-schedule-time').text(show.scheduleTime);
+			elem.find('.js-completed').prop("checked", show.completed);
 
 			return elem;
 		});
 
 		$('.show-list').html(showItems);
+		handleShowUpdate();
 	});
 }
 
 
 $(function() {
-	getAndDisplayShowUpdates();
 	handleShowAdd();
 	handleShowDelete();
+	getAndDisplayShowUpdates();
 });

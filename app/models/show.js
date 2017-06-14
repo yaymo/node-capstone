@@ -17,6 +17,9 @@ const showSchema = mongoose.Schema({
   scheduleTime: {
     type: String
   },
+  completed: {
+    type: Boolean
+  },
   id: {
     type: String
   },
