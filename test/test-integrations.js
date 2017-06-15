@@ -52,7 +52,7 @@ function tearDownDb() {
 
 
 
-describe('initial get request tests', () => {
+describe('initial get root request', () => {
     it('should render login page', () => {
       return chai.request(app)
         .get('/')
@@ -63,7 +63,7 @@ describe('initial get request tests', () => {
     });
 });
 
-describe('shows app integration testing', () => {
+describe('user endpoint tests', () => {
   before(() => {
     return runServer(TEST_DATABASE_URL);
   });
@@ -109,39 +109,6 @@ describe('shows app integration testing', () => {
     });
   });
 
-
-  describe('user put endpoint', () => {
-    it('should update a user', () => {
-      const updatedUser = generateUserLogin();
-      const newUser = generateUserLogin();
-
-      // return chai.request(app)
-      //   .post('/users')
-      //   .send(newUser)
-      //   .then((res) => {
-      //     res.should.have.status(201);
-
-      return User
-        .findOne()
-        .exec()
-        .then((user) => {
-          updatedUser.id = user._id;
-
-          return chai.request(app)
-            .put(`/users/${user._id}`)
-            .send(updatedUser);
-        })
-
-        .then(res => {
-          res.should.have.status(204);
-          return User.findById(updatedUser.id).exec();
-        })
-
-        .then((user) => {
-          user.username.should.equal(updatedUser.username);
-        });
-    });
-  });
 
   describe('delete endpoint', () => {
     it('should remove user from db', () => {
