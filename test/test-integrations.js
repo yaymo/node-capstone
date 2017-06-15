@@ -32,7 +32,8 @@ function generateShowData() {
 function generateUserLogin() {
   return {
     username: faker.internet.userName(),
-    password: faker.internet.password()
+    password: faker.internet.password(),
+    id: faker.random.uuid()
   }
 }
 
@@ -89,6 +90,7 @@ describe('shows app integration testing', () => {
           res.should.have.status(200);
         })
     });
+  });
 
   describe('post endpoint', () => {
     it('should add a new user', () => {
@@ -109,8 +111,15 @@ describe('shows app integration testing', () => {
 
 
   describe('user put endpoint', () => {
-    it('should update a post', () => {
+    it('should update a user', () => {
       const updatedUser = generateUserLogin();
+      const newUser = generateUserLogin();
+
+      // return chai.request(app)
+      //   .post('/users')
+      //   .send(newUser)
+      //   .then((res) => {
+      //     res.should.have.status(201);
 
       return User
         .findOne()
@@ -138,23 +147,34 @@ describe('shows app integration testing', () => {
     it('should remove user from db', () => {
       let user;
 
-      return User
-        .findById()
-        .exec()
-        .then((_user) => {
-          return chai.request(app).delete(`/users/${user.id}`);
-        })
+      const newUser = generateUserLogin();
 
+      return chai.request(app)
+        .post('/users')
+        .send(newUser)
         .then((res) => {
-          res.should.have.status(204)
+          res.should.have.status(201);
+          console.log(res._id);
 
-          return User.findById(user.id);
         })
 
-        .then(_user => {
-          should.not.exist(_user);
-        });
+          return User
+            .findOne()
+            .exec()
+            .then((user) => {
+              return chai.request(app).delete(`/users/${user.id}`);
+            })
+
+            .then((res) => {
+              res.should.have.status(204)
+
+              return User.findById(user.id);
+            })
+
+            .then(_user => {
+              should.not.exist(_user);
+            });
     });
   });
 });
-});
+
