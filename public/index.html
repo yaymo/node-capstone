@@ -8,27 +8,27 @@
 	</head>
 
 	<body>
+
 		<h1 id="app-name">My Shows</h1>
 
-		<div class="nav-login row">
-				<div class="sign-in-form">
-					<input class="sign-in col-4" id="email-sign-in" type="text" placeholder="Email address">
-					<input class="sign-in col-4" id="password-sign-in" type="text" placeholder="Password">
-					<button type="submit" class="sign-in col-4" id="sign-in-button" action="">Sign In</button>
-				</div>
+		<div class="nav-login">
+					<input class="sign-in" id="email-sign-in" type="text" placeholder="Email address">
+					<input class="sign-in" id="password-sign-in" type="text" placeholder="Password">
+					<button type="submit" class="sign-in" id="sign-in-button" action="">Sign In</button>
 		</div>
+		<div class="parallax">
 
 		<div class="intro">
-			<h3 id="intro-info">Tired of social media spoilers?</h3>
-			<h3>Can't remember when the next season starts?</h3>
-			<h3>Organize all of your shows and never let social media spoil the finale again!</h3>
+			<h3 class="intro-info">Tired of social media spoilers?</h3>
+			<h3 class="intro-info">Can't remember when the next season starts?</h3>
+			<h3 class="intro-info">Organize all of your shows and never let social <br> media spoil the finale again!</h3>
 		</div>
 
 		<div class="row">
 			<div class="sign-up">
 				<fieldset name="account-info">
 
-					<legend class="sign-up-header">Sign Up</legend>
+					<div class="sign-up-header">Sign Up</div>
 
 					<label id="username-label" for="email-sign-up">Username</label>
 					<input type="text" id="username" name="username" placeholder="john@yahoo.com" required>
@@ -41,6 +41,8 @@
 				</fieldset>
 			</div>
 		</div>
+
+	</div>
 
 <script
   src="https://code.jquery.com/jquery-3.2.1.js"

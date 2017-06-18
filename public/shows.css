@@ -4,33 +4,44 @@
 
 body {
 	margin: 0;
-	background-color: #42f4d4;
+	height: 500px;
+}
+
+.parallax{
+	height: 10000px;
+	background-image: url('/images/tv-background.jpg');
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 #app-name {
 	display: inline-block;
-	margin-left: 100px;
-	padding-left:30px;
 	font-size: 30px;
 	text-decoration: none;
 	font-family: 'Roboto';
-	color: black;
+	color: white;
+	position: relative;
+	left: -60px;
+	top: 5px;
 }
 
 #logout{
-	float: right;
-	position: relative;
-	margin: 20px 20px;
 	height: 40px;
 	width: 100px;
-	border: 2px solid white;
+	border: 1px solid black;
 	border-radius: 2px;
 	background-color: white;
-	border: 2px solid white;
+	position: relative;
+	left: 200px;
+	top: 30px;
 }
 
 .add-header {
 	font-size: 30px;
+	font-family: 'Roboto';
+	color: white;
 }
 
 .add-show {
@@ -40,19 +51,16 @@ body {
 .add-show-button {
 	height: 40px;
 	width: 100px;
-	border: 1px solid white;
+	border: 1px solid black;
 	border-radius: 2px;
 	background-color: white;
 }
 
-.show-title{
-	font-size: 30px;
+.js-return-date, .js-schedule-day, .schedule, .return-date, .js-show-title, #checkbox-container {
+	font-size: 25px;
 	font-family: 'Roboto';
-}
-
-.return-date, .schedule {
-	font-size: 20px;
-	font-family: 'Roboto';
+	margin-top: 10px;
+	margin-bottom: 15px;
 }
 
 #show-title, #show-date, #schedule-day, #schedule-time{
@@ -65,17 +73,16 @@ body {
 
 #name-label, #return-label, #schedule-label, #time-label {
 	margin-left: 23px;
+	font-size: 15px;
+	font-family: 'Roboto';
 }
 
 .show-form {
 	width: 400px;
-	height: 300px;
 	font-family: 'Roboto';
 	margin: 10px auto 20px auto;
-}
-
-.show-form-label {
-	border: 2px solid white;
+	background-color: white;
+	border: 1px solid white;
 	border-radius: 5px;
 }
 
@@ -87,23 +94,43 @@ body {
 
 #legend-title {
 	text-align: center;
+	font-size: 30px;
+	font-family: 'Roboto';
 }
 
-.show-item {
+.js-show-item {
 	display: inline-block;
+	margin-top: 60px;
+	margin-bottom: 10px;
+	margin-right: auto;
+	margin-left: 290px;
+	padding-right: 15px;
 	padding-left: 15px;
-	padding-right: 5px;
-	margin-top: 30px;
-	margin-left: 50px;
+	padding-top: 10px;
 	background-color: white;
-	width: 350px;
-	height: 200px;
+	height: 250px;
+	width: 400px;
 	border: 2px solid white;
 	border-radius: 5px;
 }
+.fa-trash-o:hover{
+	cursor: pointer;
+}
 
+.fa-trash-o{
+	margin-left: 100px;
+}
 
-.fa {
-	float: right;
-	padding: 5px;
+.js-show-title{
+	display: inline-block;
+	padding-left: 90px;
+	text-decoration: underline;
+}
+
+#checkbox-container{
+	display: inline-block;
+}
+
+fieldset{
+	border: none;
 }

@@ -5,28 +5,58 @@
 }
 
 body{
-	margin-right: 0px;
-	background-color: #42f4d4;
+	height: 2500px;
+	margin: 0;
+}
+
+.parallax{
+	height: 100%;
+	background-image: url('/images/tv-login.jpeg');
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 #app-name {
-	float: left;
 	margin-top: 10px;
 	margin-left: 25px;
 	margin-bottom: 80px;
+	position: fixed;
+	color: white;
+	font-size: 50px;
+}
+
+#app-name:hover{
+	cursor: pointer;
 }
 
 .nav-login {
 	display: inline-block;
-	float: right;
+	position: fixed;
+	right: 50px;
+}
+
+#sign-in-button{
+	width: 80px;
+	border-radius: 2px;
+	background-color: white;
+	border: 1px solid black;
+}
+
+#email-sign-in, #password-sign-in{
+	padding-left: 15px;
 }
 
 
 .sign-in {
 	height: 37px;
 	margin-top: 10px;
-	margin-right: auto;
-	margin-left: auto;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-top: 20px;
+	border-radius: 2px;
+	border: 1px solid black;
 }
 
 
@@ -37,40 +67,48 @@ body{
 	text-align: center;
 }
 
-#intro-info {
+.intro-info {
 	margin-bottom: 10px;
+	margin-top: 0;
+	color: white;
+	font-family: 'Roboto';
+	font-size: 40px;
+	padding: 150px 30px 350px 30px;
 }
 
 .sign-up {
 	width: 400px;
 	margin-left: auto;
 	margin-right: auto;
+	background-color: white;
+	border: 1px solid white;
+	border-radius: 2px;
 }
 
-#email {
+#username {
 	height: 40px;
 	width: 320px;
 	padding-left: 10px;
-	margin: 15px 40px;
+	margin: 15px 20px;
 }
 
 #password-label {
 	display: block;
 	font-size: 20px;
-	margin-left: 40px;
+	margin-left: 20px;
 }
 
 #password {
 	height: 40px;
 	width: 320px;
-	margin: 15px 40px;
+	margin: 15px 20px;
 	padding-left: 10px;
 }
 
-#email-label {
+#username-label {
 	font-size: 20px;
 	display: block;
-	margin-left: 40px;
+	margin-left: 20px;
 }
 
 .sign-up-header {
@@ -83,4 +121,8 @@ body{
 	height: 40px;
 	width: 320px;
 	margin: 10px auto 10px auto;
+}
+
+fieldset{
+	border: none;
 }
