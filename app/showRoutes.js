@@ -9,10 +9,12 @@ const showRoutes = express.Router();
 
 showRoutes.use(jsonParser);
 
+
 showRoutes.get('/', passport.authenticate('basic', {session: false}), (req, res) => {
-  Show.find({ user: req.user._id})
+  console.log(req.query);
+  Show.find({ user_id: req.query.id})
     .then(shows => {
-    res.json(shows);
+    res.status(200).json(shows);
   });
 });
 
@@ -25,7 +27,7 @@ showRoutes.get('/:id', (req, res) => {
 
 
 showRoutes.post('/', passport.authenticate('basic', {session: false}), jsonParser, (req, res) => {
-  //console.log(req);
+  console.log(req.body);
 
   const reqFields = ['title'];
   for(let i=0; i<reqFields.length; i++) {
@@ -37,8 +39,6 @@ showRoutes.post('/', passport.authenticate('basic', {session: false}), jsonParse
     }
   }
   req.body.user = req.user._id
-  console.log(req.body);
-
 
   const item = Show.create(req.body);
   res.status(201).json(item);

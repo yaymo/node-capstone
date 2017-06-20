@@ -37,6 +37,7 @@ router.post('/', (req, res) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
+  console.log(req.body);
   if (!('username' in req.body)) {
     return res.status(422).json({message: 'Missing field: username'});
   }
@@ -89,6 +90,7 @@ router.post('/', (req, res) => {
         })
     })
     .then(user => {
+      console.log(user);
       return res.status(201).json(user.apiRepr());
     })
     .catch(err => {
@@ -99,9 +101,42 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/', (req, res) => {
+router.post('/login', (req, res) => {
+  if (!req.body) {
+    return res.status(400).json({message: 'No request body'});
+  }
+  if (!('username' in req.body)) {
+    console.log(req);
+    return res.status(422).json({message: 'Missing field: username'});
+  }
+
+  let {username, password, firstName, lastName} = req.body;
+
+  if (typeof username !== 'string') {
+    return res.status(422).json({message: 'Incorrect field type: username'});
+  }
+
+  username = username.trim();
+
+  if (username === '') {
+    return res.status(422).json({message: 'Incorrect field length: username'});
+  }
+
+  if (!(password)) {
+    return res.status(422).json({message: 'Missing field: password'});
+  }
+
+  if (typeof password !== 'string') {
+    return res.status(422).json({message: 'Incorrect field type: password'});
+  }
+
+  password = password.trim();
+
+  if (password === '') {
+    return res.status(422).json({message: 'Incorrect field length: password'});
+  }
   return User
-    .find()
+    .find({username})
     .exec()
     .then(users => res.json(users.map(user => user.apiRepr())))
     .catch(err => console.log(err) && res.status(500).json({message: 'Internal server error'}));
