@@ -22,7 +22,7 @@ userSchema.methods.apiRepr = function() {
     username: this.username,
     firstName: this.firstName,
     lastName: this.lastName,
-    id: this._id
+    _id: this._id
   };
 }
 

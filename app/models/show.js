@@ -23,11 +23,7 @@ const showSchema = mongoose.Schema({
   id: {
     type: String
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, 'no id found']
-  }
+  user_id: {type: String, required: true}
 });
 
 
