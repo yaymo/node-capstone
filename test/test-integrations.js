@@ -103,8 +103,8 @@ describe('user endpoint tests', () => {
           res.should.be.json;
           res.should.have.status(201);
           res.body.should.be.a('object');
-          res.body.should.include.keys('username', 'id');
-          res.body.id.should.not.be.null;
+          res.body.should.include.keys('username', '_id');
+          res.body._id.should.not.be.null;
         });
     });
   });
