@@ -8,7 +8,7 @@ var showAddFormTemplate =
 	`<div class="row">
 		<form class="show-form" action="">
 			<fieldset class="show-form-label">
-				<legend id="legend-title">Add a show!</legend>
+				<div id="legend-title">Show Info</div>
 					<label for="show-name" id="name-label">Title:</label>
 					<input type="text" id="show-title" name="show-name" placeholder="Ex: Family Feud" required></input>
 					<label for="show-return" id="return-label">Return Date:</label>
@@ -23,11 +23,11 @@ var showAddFormTemplate =
 	<div>`
 
 var showTemplate =
-	`<div class="col-6 js-show-item">
+	`<div class="js-show-item">
 			<h3 class="js-show-title"></h3>
-			<i class="fa fa-trash-o" aria-hidden="true"></i>
-			<p>Return Date: <span class="js-return-date"></span></p>
-			<p>Schedule: <span class="js-schedule-day"></span> at <span class="js-schedule-time">
+			<i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+			<p class="return-date">Return Date: <span class="js-return-date"></span></p>
+			<p class="schedule">Schedule: <span class="js-schedule-day"></span> at <span class="js-schedule-time">
 			</span></p>
 			<p id="checkbox-container">Mark as Watched: </p>
 			<input type="checkbox" name="completed" class="js-completed" value="">
@@ -43,7 +43,9 @@ $('.add-show-button').click(function() {
 			returnDate: $('#show-date').val(),
 			scheduleDay: $('#schedule-day').val(),
 			scheduleTime: $('#schedule-time').val(),
-			completed: false
+			completed: false,
+			user_id: JSON.parse(localStorage.user)._id
+
 		}
 		addShow(show);
 	})
@@ -60,7 +62,7 @@ function addShow(show) {
 			getAndDisplayShowUpdates();
 		},
 		headers: {
-			user: JSON.parse(localStorage.headers)
+			user: localStorage.headers
 		},
 		dataType: 'json',
 		contentType: 'application/json'
@@ -87,7 +89,7 @@ function updateShow(showUpdate) {
 			getAndDisplayShowUpdates();
 		},
 		headers: {
-			user: JSON.parse(localStorage.headers)
+			user: localStorage.headers
 		},
 		dataType: 'json',
 		contentType: 'application/json'
@@ -116,9 +118,7 @@ function handleShowDelete() {
 }
 
 function handleShowUpdate() {
-	console.log('test');
 	$('.js-completed:checkbox').change(function(e) {
-		console.log('test');
 		e.preventDefault();
 		let showUpdate = {
 			completed: $('.js-completed').prop('checked'),
@@ -128,10 +128,8 @@ function handleShowUpdate() {
 	});
 }
 
-
-
 function getAndDisplayShowUpdates() {
-	$.getJSON('/shows', function(data) {
+	$.getJSON('/shows?id=' + JSON.parse(localStorage.user)._id, function(data) {
 		var showItems = data.map(function(show) {
 			var elem = $(showTemplate);
 			elem.attr('id', show._id);
@@ -140,7 +138,6 @@ function getAndDisplayShowUpdates() {
 			elem.find('.js-schedule-day').text(show.scheduleDay);
 			elem.find('.js-schedule-time').text(show.scheduleTime);
 			elem.find('.js-completed').prop("checked", show.completed);
-
 			return elem;
 		});
 
@@ -148,6 +145,9 @@ function getAndDisplayShowUpdates() {
 		handleShowUpdate();
 	});
 }
+
+
+
 
 
 $(function() {

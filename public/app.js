@@ -1,5 +1,4 @@
 
-
 $(function() {
   $('#sign-up-button').click(function(e) {
     e.preventDefault();
@@ -13,8 +12,10 @@ function createAccount(username, password) {
     type: 'POST',
     data: JSON.stringify({username: username, password: password}),
     contentType: 'application/json',
-    success: function() {
+    success: function(user) {
       localStorage.headers = "Basic" + btoa(username+ ":" + password)
+      localStorage.user = JSON.stringify(user)
+
       window.location = 'shows.html';
     }
   });
@@ -29,12 +30,15 @@ $(function() {
 
 function logIn(username, password) {
   $.ajax({
-    url:'/users',
-    type: 'GET',
+    url:'/users/login',
+    type: 'POST',
     data: JSON.stringify({username: username, password: password}),
+    contentType: 'application/json',
     success: function(user) {
-      localStorage.headers = JSON.stringify(user[0])
+      localStorage.headers = "Basic" + btoa(username+ ":" + password)
+      localStorage.user = JSON.stringify(user[0])
       window.location = 'shows.html';
     }
   });
 }
+
