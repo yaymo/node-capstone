@@ -7,7 +7,7 @@ const faker = require('faker');
 const {User} = require('../app/models/user');
 
 
-const {app, runServer, closeServer} = require('../server');
+const {app, closeServer, runServer} = require('../server');
 const {Show} = require('../app/models/show');
 const {TEST_DATABASE_URL} = require('../config/database');
 chai.use(chaiHttp);
@@ -20,7 +20,7 @@ function seedShowData() {
     seedData.push(generateShowData());
   }
 
-  return Show.insertMany(seedData);
+  return Show.insertOne(seedData);
 }
 
 function generateShowData() {
@@ -70,10 +70,6 @@ describe('user endpoint tests', () => {
 
   beforeEach(() => {
     return seedUserLogin();
-  });
-
-  afterEach(() => {
-    return tearDownDb();
   });
 
   after(() => {

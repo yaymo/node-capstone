@@ -102,8 +102,8 @@ body {
 	display: inline-block;
 	margin-top: 60px;
 	margin-bottom: 10px;
-	margin-right: auto;
-	margin-left: 290px;
+	margin-right: 5px;
+	margin-left: 5px;
 	padding-right: 15px;
 	padding-left: 15px;
 	padding-top: 10px;
@@ -133,4 +133,11 @@ body {
 
 fieldset{
 	border: none;
+}
+
+@media only screen and(max-width: 850px){
+	.show-list, .create-list{
+		margin-left: auto;
+		margin-right: auto;
+	}
 }

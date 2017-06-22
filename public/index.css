@@ -5,7 +5,7 @@
 }
 
 body{
-	height: 2500px;
+	height: 1500px;
 	margin: 0;
 }
 
@@ -19,9 +19,7 @@ body{
 }
 
 #app-name {
-	margin-top: 10px;
-	margin-left: 25px;
-	margin-bottom: 80px;
+	margin: 10px 10px 80px 20px;
 	position: fixed;
 	color: white;
 	font-size: 50px;
@@ -33,9 +31,11 @@ body{
 
 .nav-login {
 	display: inline-block;
-	position: fixed;
-	right: 50px;
+	position: absolute;
+	right: 40px;
 }
+
+
 
 #sign-in-button{
 	width: 80px;
@@ -73,11 +73,11 @@ body{
 	color: white;
 	font-family: 'Roboto';
 	font-size: 40px;
-	padding: 150px 30px 350px 30px;
+	padding: 100px 60px 120px 20px;
 }
 
 .sign-up {
-	width: 400px;
+	width: 380px;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: white;
@@ -85,29 +85,16 @@ body{
 	border-radius: 2px;
 }
 
-#username {
+#username, #password {
 	height: 40px;
 	width: 320px;
 	padding-left: 10px;
 	margin: 15px 20px;
 }
 
-#password-label {
+#password-label, #username-label {
 	display: block;
 	font-size: 20px;
-	margin-left: 20px;
-}
-
-#password {
-	height: 40px;
-	width: 320px;
-	margin: 15px 20px;
-	padding-left: 10px;
-}
-
-#username-label {
-	font-size: 20px;
-	display: block;
 	margin-left: 20px;
 }
 
@@ -125,4 +112,27 @@ body{
 
 fieldset{
 	border: none;
+}
+
+@media only screen and (max-width:699px){
+	.sign-in {
+		display: block;
+		margin: 5px;
+		position: relative;
+		top: 20px;
+		right: -50px;
+	}
+	#sign-in-button{
+		width: 123px;
+	}
+	.sign-up{
+		margin-right: 5px;
+	}
+	.intro-info{
+		padding: 150px 10px 75px 10px;
+	}
+}
+
+.demo-login{
+	margin-left: 20px;
 }
