@@ -5,7 +5,7 @@
 }
 
 body{
-	height: 1500px;
+	height: 1800px;
 	margin: 0;
 }
 
@@ -19,8 +19,8 @@ body{
 }
 
 #app-name {
-	margin: 10px 10px 80px 20px;
-	position: fixed;
+	margin: 10px 10px 80px 15px;
+	position: absolute;
 	color: white;
 	font-size: 50px;
 }
@@ -32,7 +32,11 @@ body{
 .nav-login {
 	display: inline-block;
 	position: absolute;
-	right: 40px;
+	right: 1px;
+	border: 1px solid white;
+	border-radius: 5px;
+	background-color: white;
+	padding-bottom: 10px;
 }
 
 
@@ -51,10 +55,8 @@ body{
 
 .sign-in {
 	height: 37px;
-	margin-top: 10px;
 	margin-right: 10px;
 	margin-left: 10px;
-	margin-top: 20px;
 	border-radius: 2px;
 	border: 1px solid black;
 }
@@ -73,7 +75,7 @@ body{
 	color: white;
 	font-family: 'Roboto';
 	font-size: 40px;
-	padding: 100px 60px 120px 20px;
+	padding: 120px 60px 120px 20px;
 }
 
 .sign-up {
@@ -125,14 +127,50 @@ fieldset{
 	#sign-in-button{
 		width: 123px;
 	}
-	.sign-up{
-		margin-right: 5px;
-	}
+
 	.intro-info{
 		padding: 150px 10px 75px 10px;
 	}
+
+	.demo-password{
+		display: block;
+	}
+	.nav-login{
+		display: block;
+		position: absolute;
+		right: 2px;
+		height: 220px;
+		width: 200px;
+	}
+	#email-sign-in, #password-sign-in, #sign-in-button{
+		position: relative;
+		left: 1px;
+		width: 95%;
+
+	}
+	#intro{
+		padding-top: 250px;
+	}
+	#app-name{
+		margin-left: 5px;
+	}
 }
 
-.demo-login{
-	margin-left: 20px;
+@media only screen and (max-width: 436px){
+	.nav-login{
+		display: block;
+		position: absolute;
+		right: 10px;
+		top: 80px;
+		width: 95%;
+		height: 220px;
+	}
+	.demo-login{
+		margin-bottom: 0px;
+		padding-left: 10px;
+	}
+
+	#intro{
+		padding-top: 350px;
+	}
 }
