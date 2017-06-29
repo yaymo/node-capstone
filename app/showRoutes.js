@@ -26,7 +26,7 @@ showRoutes.get('/:id', (req, res) => {
 });
 
 
-showRoutes.post('/', passport.authenticate('basic', {session: false}), jsonParser, (req, res) => {
+showRoutes.post('/', jsonParser, (req, res) => {
   console.log(req.body);
 
   const reqFields = ['title'];
