@@ -31,7 +31,7 @@ var showTemplate =
 			<p class="return-date">Return Date: <span class="js-return-date"></span></p>
 			<p class="schedule">Schedule: <span class="js-schedule-day"></span> at <span class="js-schedule-time">
 			</span></p>
-			<p id="checkbox-container">Mark as Watched: </p>
+			<p id="checkbox-container">Update as Complete: </p>
 			<input type="checkbox" name="completed" class="js-completed" value="">
 			<i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
 			</div>
