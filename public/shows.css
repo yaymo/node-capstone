@@ -18,13 +18,13 @@ body {
 
 #app-name {
 	display: inline-block;
-	font-size: 30px;
+	font-size: 50px;
 	text-decoration: none;
 	font-family: 'Roboto';
 	color: white;
 	position: relative;
-	left: -60px;
-	top: 5px;
+	top: 10px;
+	left: 40px;
 }
 
 #logout{
@@ -33,9 +33,9 @@ body {
 	border: 1px solid black;
 	border-radius: 2px;
 	background-color: white;
-	position: relative;
-	left: 200px;
-	top: 30px;
+	position: absolute;
+	top: 20px;
+	right: 20px;
 }
 
 .add-header {
@@ -44,8 +44,9 @@ body {
 	color: white;
 }
 
-.add-show {
-	text-align: center;
+.create-list {
+	margin-right: auto;
+	margin-left: auto;
 }
 
 .add-show-button {
@@ -54,6 +55,9 @@ body {
 	border: 1px solid black;
 	border-radius: 2px;
 	background-color: white;
+	position: relative;
+	left: 60px;
+	margin-bottom: 20px;
 }
 
 .js-return-date, .js-schedule-day, .schedule, .return-date, .js-show-title, #checkbox-container {
@@ -72,7 +76,7 @@ body {
 }
 
 #name-label, #return-label, #schedule-label, #time-label {
-	margin-left: 23px;
+	margin-left: 40px;
 	font-size: 15px;
 	font-family: 'Roboto';
 }
@@ -89,7 +93,8 @@ body {
 #submit-show {
 	height: 40px;
 	width: 320px;
-	margin-left: 23px;
+	margin-left: 40px;
+	margin-bottom: 10px;
 }
 
 #legend-title {
@@ -100,17 +105,11 @@ body {
 
 .js-show-item {
 	display: inline-block;
-	margin-top: 60px;
-	margin-bottom: 10px;
-	margin-right: 5px;
-	margin-left: 5px;
-	padding-right: 15px;
-	padding-left: 15px;
-	padding-top: 10px;
 	background-color: white;
-	height: 250px;
-	width: 400px;
-	border: 2px solid white;
+	height: 275px;
+	width: 350px;
+	margin-bottom: 20px;
+	border: 1px solid white;
 	border-radius: 5px;
 }
 .fa-trash-o:hover{
@@ -118,26 +117,77 @@ body {
 }
 
 .fa-trash-o{
-	margin-left: 100px;
+	margin-left: 40px;
 }
 
 .js-show-title{
 	display: inline-block;
-	padding-left: 90px;
 	text-decoration: underline;
+}
+
+.centered{
+	text-align: center;
 }
 
 #checkbox-container{
 	display: inline-block;
+	padding-left: 10px;
+}
+
+.return-date, .schedule{
+	padding-left: 10px;
 }
 
 fieldset{
 	border: none;
 }
 
-@media only screen and(max-width: 850px){
-	.show-list, .create-list{
-		margin-left: auto;
-		margin-right: auto;
+@media only screen and (min-width: 992px) and (max-width: 1199px){
+	.row{
+		margin-left: 75px;
+		margin-right: 75px;
 	}
 }
+
+@media only screen and (min-width: 768px) and (max-width: 991px){
+	.row{
+		margin-left: -40px;
+		margin-right: -40px;
+	}
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px){
+	.row{
+		margin-right: 60px;
+		margin-left: 60px;
+	}
+}
+
+@media only screen and (min-width: 537px) and (max-width: 575px){
+	.row{
+		margin-left: 60px;
+		margin-right: 60px;
+	}
+}
+
+@media only screen and (min-width: 500px) and (max-width: 538px){
+	.row{
+		margin-left: 40px;
+		margin-right: 40px;
+	}
+}
+
+@media only screen and (min-width: 460px) and (max-width: 499px){
+	.row{
+		margin-right: 30px;
+		margin-left: 30px;
+	}
+}
+
+@media only screen and (min-width: 430px) and (max-width: 459px){
+	.row{
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+}
+
