@@ -114,6 +114,7 @@ body{
 
 .demo-password, .demo-login{
 	padding-left: 5px;
+	font-size: 15px;
 }
 
 fieldset{
@@ -136,8 +137,9 @@ fieldset{
 		padding: 150px 10px 75px 10px;
 	}
 
-	.demo-password{
+	.demo-password, .demo-login{
 		display: block;
+		font-size: 15px;
 	}
 	.nav-login{
 		display: block;
