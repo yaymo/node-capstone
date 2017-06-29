@@ -9,34 +9,13 @@ const router = express.Router();
 const {User} = require('./models/user');
 
 router.use(jsonParser);
-router.use(passport.initialize());
 
-const strategy = new BasicStrategy(    
-   (username, password, cb) => {   
-     User    
-       .findOne({username})    
-       .exec()   
-       .then(user => {   
-         if(!user) {   
-           return cb(null, false, {    
-             message: 'incorrect username'   
-           });   
-         }   
-         if(user.password !== password) {    
-           return cb(null, false, 'Incorrect password');   
-        }   
-         return cb(null, user);    
-       })    
-       .catch(err => cb(err))    
-   });   
- passport.use(strategy);
 
 
 router.post('/', (req, res) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
-  console.log(req.body);
   if (!('username' in req.body)) {
     return res.status(422).json({message: 'Missing field: username'});
   }
@@ -89,7 +68,6 @@ router.post('/', (req, res) => {
         })
     })
     .then(user => {
-      console.log(user);
       return res.status(201).json(user.apiRepr());
     })
     .catch(err => {
@@ -105,7 +83,6 @@ router.post('/login', (req, res) => {
     return res.status(400).json({message: 'No request body'});
   }
   if (!('username' in req.body)) {
-    console.log(req);
     return res.status(422).json({message: 'Missing field: username'});
   }
 
@@ -137,7 +114,19 @@ router.post('/login', (req, res) => {
   return User
     .find({username})
     .exec()
-    .then(users => res.json(users.map(user => user.apiRepr())))
+    //.then(users => res.json(users.map(user => user.apiRepr())))
+    .then((users) => {
+      return users[0].validatePassword(password).then(isValid => {
+        console.log(isValid);
+        console.log(password);
+        if(isValid) {
+          return res.status(200).json(users[0].apiRepr());
+        }
+        else{
+          return res.status(401).json({message: 'Invalid password'});
+        }
+      })
+    })
     .catch(err => console.log(err) && res.status(500).json({message: 'Internal server error'}));
 });
 
@@ -165,6 +154,7 @@ const basicStrategy = new BasicStrategy(function(username, password, callback) {
 
 
 passport.use(basicStrategy);
+router.use(passport.initialize());
 
 router.get('/me',
   passport.authenticate('basic', {session: false}),

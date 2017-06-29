@@ -36,7 +36,7 @@ function logIn(username, password) {
     contentType: 'application/json',
     success: function(user) {
       localStorage.headers = "Basic" + btoa(username+ ":" + password)
-      localStorage.user = JSON.stringify(user[0])
+      localStorage.user = JSON.stringify(user)
       window.location = 'shows.html';
     }
   });

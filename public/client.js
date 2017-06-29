@@ -133,26 +133,31 @@ function handleShowUpdate() {
 }
 
 function getAndDisplayShowUpdates() {
-	$.getJSON('/shows?id=' + JSON.parse(localStorage.user)._id, function(data) {
-		var showItems = data.map(function(show) {
-			var elem = $(showTemplate);
-			elem.attr('id', show._id);
-			elem.find('.js-show-title').text(show.title);
-			elem.find('.js-return-date').text(show.returnDate);
-			elem.find('.js-schedule-day').text(show.scheduleDay);
-			elem.find('.js-schedule-time').text(show.scheduleTime);
-			elem.find('.js-completed').prop("checked", show.completed);
-			return elem;
-		});
+	$.ajax({
+		method: 'GET',
+		url: '/shows?id=' + JSON.parse(localStorage.user)._id,
+		success: function(data) {
+			var showItems = data.map(function(show) {
+				var elem = $(showTemplate);
+				elem.attr('id', show._id);
+				elem.find('.js-show-title').text(show.title);
+				elem.find('.js-return-date').text(show.returnDate);
+				elem.find('.js-schedule-day').text(show.scheduleDay);
+				elem.find('.js-schedule-time').text(show.scheduleTime);
+				elem.find('.js-completed').prop("checked", show.completed);
+				return elem;
+			})
 
-		$('.show-list').html(showItems);
-		handleShowUpdate();
+			$('.show-list').html(showItems);
+			handleShowUpdate();
+		},
+		headers: {
+			user: localStorage.headers
+		},
+		dataType: 'json',
+		contentType: 'application/json'
 	});
 }
-
-
-
-
 
 $(function() {
 	handleShowAdd();
