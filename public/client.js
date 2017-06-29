@@ -31,7 +31,7 @@ var showTemplate =
 			<p class="return-date">Return Date: <span class="js-return-date"></span></p>
 			<p class="schedule">Schedule: <span class="js-schedule-day"></span> at <span class="js-schedule-time">
 			</span></p>
-			<p id="checkbox-container">Update as Complete: </p>
+			<p id="checkbox-container">Update as Watched: </p>
 			<input type="checkbox" name="completed" class="js-completed" value="">
 			<i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
 			</div>
@@ -125,7 +125,7 @@ function handleShowUpdate() {
 	$('.js-completed:checkbox').change(function(e) {
 		e.preventDefault();
 		let showUpdate = {
-			completed: $('.js-completed').prop('checked'),
+			completed: $(e.currentTarget).closest('.js-completed').prop('checked'),
 			_id: $(e.currentTarget).closest('.item').attr('id')
 		}
 		updateShow(showUpdate);

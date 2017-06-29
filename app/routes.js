@@ -14,7 +14,7 @@ router.use(passport.initialize());
 const strategy = new BasicStrategy(    
    (username, password, cb) => {   
      User    
-       .findOne({username: username})    
+       .findOne({username})    
        .exec()   
        .then(user => {   
          if(!user) {   

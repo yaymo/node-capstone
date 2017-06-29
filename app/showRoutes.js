@@ -10,15 +10,14 @@ const showRoutes = express.Router();
 showRoutes.use(jsonParser);
 
 
-showRoutes.get('/', (req, res) => {
-  console.log(req.query);
+showRoutes.get('/', passport.authenticate('basic', {session: false}), (req, res) => {
   Show.find({ user_id: req.query.id})
     .then(shows => {
     res.status(200).json(shows);
   });
 });
 
-showRoutes.get('/:id', (req, res) => {
+showRoutes.get('/:id', passport.authenticate('basic', {session: false}),(req, res) => {
   Show.findById(req.params.id)
     .then(shows => {
     res.json(shows)
@@ -26,9 +25,7 @@ showRoutes.get('/:id', (req, res) => {
 });
 
 
-showRoutes.post('/', jsonParser, (req, res) => {
-  console.log(req.body);
-
+showRoutes.post('/', passport.authenticate('basic', {session: false}), jsonParser, (req, res) => {
   const reqFields = ['title'];
   for(let i=0; i<reqFields.length; i++) {
     const field = reqFields[i];
@@ -44,7 +41,7 @@ showRoutes.post('/', jsonParser, (req, res) => {
   res.status(201).json(item);
 })
 
-showRoutes.put('/:id', (req, res) => {
+showRoutes.put('/:id', passport.authenticate('basic', {session: false}), jsonParser, (req, res) => {
   const reqFields = ['completed', '_id'];
   for(let i=0; i<reqFields.length; i++) {
     const field = reqFields[i];
