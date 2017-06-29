@@ -10,7 +10,7 @@ const showRoutes = express.Router();
 showRoutes.use(jsonParser);
 
 
-showRoutes.get('/', passport.authenticate('basic', {session: false}), (req, res) => {
+showRoutes.get('/', (req, res) => {
   console.log(req.query);
   Show.find({ user_id: req.query.id})
     .then(shows => {

@@ -11,6 +11,26 @@ const {User} = require('./models/user');
 router.use(jsonParser);
 router.use(passport.initialize());
 
+const strategy = new BasicStrategy(    
+   (username, password, cb) => {   
+     User    
+       .findOne({username: username})    
+       .exec()   
+       .then(user => {   
+         if(!user) {   
+           return cb(null, false, {    
+             message: 'incorrect username'   
+           });   
+         }   
+         if(user.password !== password) {    
+           return cb(null, false, 'Incorrect password');   
+        }   
+         return cb(null, user);    
+       })    
+       .catch(err => cb(err))    
+   });   
+ passport.use(strategy);
+
 
 router.post('/', (req, res) => {
   if (!req.body) {
