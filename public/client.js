@@ -23,15 +23,19 @@ var showAddFormTemplate =
 	<div>`
 
 var showTemplate =
-	`<div class="js-show-item">
-			<h3 class="js-show-title"></h3>
-			<i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+		`<div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 item">
+			<div class="js-show-item">
+			<div class="centered">
+				<h3 class="js-show-title"></h3>
+			</div>
 			<p class="return-date">Return Date: <span class="js-return-date"></span></p>
 			<p class="schedule">Schedule: <span class="js-schedule-day"></span> at <span class="js-schedule-time">
 			</span></p>
 			<p id="checkbox-container">Mark as Watched: </p>
 			<input type="checkbox" name="completed" class="js-completed" value="">
-	</div>`
+			<i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+			</div>
+		</div>`
 
 
 $('.add-show-button').click(function() {
@@ -112,7 +116,7 @@ function handleShowDelete() {
 	$('.show-list').on('click', '.fa-trash-o', function(e) {
 		e.preventDefault();
 		deleteShow(
-			$(e.currentTarget).closest('.js-show-item').attr('id')
+			$(e.currentTarget).closest('.item').attr('id')
 		);
 	});
 }
@@ -122,7 +126,7 @@ function handleShowUpdate() {
 		e.preventDefault();
 		let showUpdate = {
 			completed: $('.js-completed').prop('checked'),
-			_id: $(e.currentTarget).closest('.js-show-item').attr('id')
+			_id: $(e.currentTarget).closest('.item').attr('id')
 		}
 		updateShow(showUpdate);
 	});
