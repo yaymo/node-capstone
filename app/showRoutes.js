@@ -58,7 +58,6 @@ showRoutes.put('/:id', jsonParser, (req, res) => {
   }
 
   Show.update({ _id: req.params.id }, { $set: req.body}, function(data) {
-      console.log(data);
       res.sendStatus(204);
   });
 });
