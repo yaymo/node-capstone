@@ -114,16 +114,13 @@ router.post('/login', (req, res) => {
   return User
     .find({username})
     .exec()
-    //.then(users => res.json(users.map(user => user.apiRepr())))
     .then((users) => {
       return users[0].validatePassword(password).then(isValid => {
-        console.log(isValid);
-        console.log(password);
         if(isValid) {
           return res.status(200).json(users[0].apiRepr());
         }
         else{
-          return res.status(401).json({message: 'Invalid password'});
+          return res.status(401).json({message:"Invalid password!"});
         }
       })
     })
