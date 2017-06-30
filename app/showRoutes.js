@@ -17,7 +17,7 @@ showRoutes.get('/', (req, res) => {
   });
 });
 
-showRoutes.get('/:id', passport.authenticate('basic', {session: false}),(req, res) => {
+showRoutes.get('/:id',(req, res) => {
   Show.findById(req.params.id)
     .then(shows => {
     res.json(shows)
@@ -25,7 +25,7 @@ showRoutes.get('/:id', passport.authenticate('basic', {session: false}),(req, re
 });
 
 
-showRoutes.post('/', passport.authenticate('basic', {session: false}), jsonParser, (req, res) => {
+showRoutes.post('/', jsonParser, (req, res) => {
   const reqFields = ['title'];
   for(let i=0; i<reqFields.length; i++) {
     const field = reqFields[i];
@@ -41,7 +41,7 @@ showRoutes.post('/', passport.authenticate('basic', {session: false}), jsonParse
   res.status(201).json(item);
 })
 
-showRoutes.put('/:id', passport.authenticate('basic', {session: false}), jsonParser, (req, res) => {
+showRoutes.put('/:id', jsonParser, (req, res) => {
   const reqFields = ['completed', '_id'];
   for(let i=0; i<reqFields.length; i++) {
     const field = reqFields[i];
@@ -65,7 +65,7 @@ showRoutes.put('/:id', passport.authenticate('basic', {session: false}), jsonPar
 
 
 
-showRoutes.delete('/:id', passport.authenticate('basic', {session: false}), (req, res) => {
+showRoutes.delete('/:id', (req, res) => {
   Show.findOneAndRemove({
     _id: req.params.id},
     function() {
