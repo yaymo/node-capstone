@@ -35,7 +35,8 @@ showRoutes.post('/', jsonParser, (req, res) => {
       return res.status(400).send(message);
     }
   }
-  req.body.user = req.user._id
+  console.log(req.body);
+  req.body.user = req.user_id
 
   const item = Show.create(req.body);
   res.status(201).json(item);
