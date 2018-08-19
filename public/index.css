@@ -17,7 +17,7 @@ body{
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-
+ 
 #app-name {
 	margin: 20px 10px 80px 15px;
 	position: absolute;
@@ -33,23 +33,25 @@ body{
 	display: inline-block;
 	position: absolute;
 	right: 1px;
-	border: 1px solid white;
 	border-radius: 5px;
-	background-color: white;
 	padding-bottom: 10px;
 }
-
-
 
 #sign-in-button{
 	width: 80px;
 	border-radius: 2px;
+	background-color: transparent;
+	border: 2px solid black;
+}
+
+#sign-in-button:hover{
 	background-color: white;
-	border: 1px solid black;
 }
 
 #email-sign-in, #password-sign-in{
 	padding-left: 15px;
+	font-size: 15px;
+	background-color: transparent;
 }
 
 
@@ -58,7 +60,7 @@ body{
 	margin-right: 10px;
 	margin-left: 10px;
 	border-radius: 2px;
-	border: 1px solid black;
+	border: 2px solid black;
 }
 
 
@@ -82,9 +84,9 @@ body{
 	width: 380px;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: white;
-	border: 1px solid white;
-	border-radius: 2px;
+	border-radius: 4px;
+	border: 1px transparent;
+	background: rgba(240, 240, 240, 0.5);
 }
 
 #username, #password {
@@ -92,17 +94,26 @@ body{
 	width: 320px;
 	padding-left: 10px;
 	margin: 15px 20px;
+	background-color: transparent;
+	border: 2px solid black;
+	border-radius: 2px;
 }
 
+#username::placeholder, #password::placeholder{
+	font-size: 15px;
+	color: white;
+}
 #password-label, #username-label {
 	display: block;
 	font-size: 20px;
 	margin-left: 20px;
+	color: white;
 }
 
 .sign-up-header {
 	text-align: center;
 	font-size: 25px;
+	color: white;
 }
 
 #sign-up-button {
@@ -110,6 +121,11 @@ body{
 	height: 40px;
 	width: 320px;
 	margin: 10px auto 10px auto;
+	background-color: transparent;
+	border: 2px solid black;
+	border-radius: 5px;
+	color: white;
+	font-size: 25px;
 }
 
 .demo-password, .demo-login{
