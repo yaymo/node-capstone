@@ -8,7 +8,7 @@ body {
 }
 
 .parallax{
-	height: 10000px;
+	height: 2000px;
 	background-image: url('/images/tv-background.jpg');
 	background-attachment: fixed;
 	background-position: center;
